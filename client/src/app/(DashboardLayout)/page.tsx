@@ -5,7 +5,6 @@ import SalesOverview from '@/app/(DashboardLayout)/components/dashboard/SalesOve
 import YearlyBreakup from '@/app/(DashboardLayout)/components/dashboard/YearlyBreakup';
 import RecentTransactions from '@/app/(DashboardLayout)/components/dashboard/RecentTransactions';
 import ProductPerformance from '@/app/(DashboardLayout)/components/dashboard/ProductPerformance';
-import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
 import MonthlyEarnings from '@/app/(DashboardLayout)/components/dashboard/MonthlyEarnings';
 
 const Dashboard = () => {
@@ -32,7 +31,6 @@ const Dashboard = () => {
           <ProductPerformance />
         </Grid>
         <Grid item xs={12}>
-          <Blog />
         </Grid>
       </Grid>
     </Box>
