@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Grid, Box, Card, Stack, Typography, FormGroup, FormControlLabel, Checkbox, Button, TextField } from "@mui/material";
 // components
 
-import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
 
 const Login2 = () => {
@@ -16,7 +15,6 @@ const Login2 = () => {
     });
   };
   return (
-    <PageContainer title="Login" description="this is Login page">
       <Box
         sx={{
           position: "relative",
@@ -111,7 +109,6 @@ const Login2 = () => {
           </Grid>
         </Grid>
       </Box>
-    </PageContainer>
   );
 };
 export default Login2;
