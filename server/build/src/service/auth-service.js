@@ -30,18 +30,18 @@ class AuthService {
         `;
             const result = yield db_1.default.query(text, [email, hashedPassword]);
             if (result.rows.length === 0) {
-                throw new Error("User not found!");
+                throw new Error('User not found!');
             }
             const user = result.rows[0];
             const payload = {
                 id: user.id,
-                email: user.email
+                email: user.email,
             };
             const accessToken = this.helper.generateAccessToken(payload);
             const refreshToken = this.helper.generateRefreshToken(payload);
             return {
                 access_token: accessToken,
-                refresh_token: refreshToken
+                refresh_token: refreshToken,
             };
         });
     }
@@ -57,13 +57,18 @@ class AuthService {
         VALUES ($1, $2, $3, $4)
         `;
             try {
-                yield db_1.default.query("BEGIN");
-                const newUser = yield db_1.default.query(text, [first_name, last_name, email, hashPassword]);
-                yield db_1.default.query("COMMIT");
+                yield db_1.default.query('BEGIN');
+                const newUser = yield db_1.default.query(text, [
+                    first_name,
+                    last_name,
+                    email,
+                    hashPassword,
+                ]);
+                yield db_1.default.query('COMMIT');
                 return newUser;
             }
             catch (error) {
-                yield db_1.default.query("ROLLBACK");
+                yield db_1.default.query('ROLLBACK');
                 throw new Error(error);
             }
         });

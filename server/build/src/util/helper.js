@@ -12,20 +12,24 @@ class Helper {
      */
     generateAccessToken(payload) {
         var _a;
-        return jsonwebtoken_1.default.sign(payload, (_a = process.env.JWT_SECRET_KEY) !== null && _a !== void 0 ? _a : "Secret_Key", { expiresIn: "1h" });
+        return jsonwebtoken_1.default.sign(payload, (_a = process.env.JWT_SECRET_KEY) !== null && _a !== void 0 ? _a : 'Secret_Key', {
+            expiresIn: '1h',
+        });
     }
     /**
      * generateRefreshToken
      */
     generateRefreshToken(payload) {
         var _a;
-        return jsonwebtoken_1.default.sign(payload, (_a = process.env.JWT_SECRET_KEY) !== null && _a !== void 0 ? _a : "Secret_Key", { expiresIn: "7d" });
+        return jsonwebtoken_1.default.sign(payload, (_a = process.env.JWT_SECRET_KEY) !== null && _a !== void 0 ? _a : 'Secret_Key', {
+            expiresIn: '7d',
+        });
     }
     /**
      * hashPassword
      */
     hashPassword(payload) {
-        return crypto_1.default.createHash("sha256").update(payload).digest("base64");
+        return crypto_1.default.createHash('sha256').update(payload).digest('base64');
     }
 }
 exports.Helper = Helper;
