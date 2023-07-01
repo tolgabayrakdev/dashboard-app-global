@@ -21,13 +21,13 @@ class AuthController {
             try {
                 const { email, password } = req.body;
                 const result = yield this.authService.login(email, password);
-                res.cookie("access_token", result.access_token, {
-                    httpOnly: true
+                res.cookie('access_token', result.access_token, {
+                    httpOnly: true,
                 });
-                res.cookie("refresh_token", result.refresh_token, {
-                    httpOnly: true
+                res.cookie('refresh_token', result.refresh_token, {
+                    httpOnly: true,
                 });
-                res.status(200).json({ success: true, message: "Login is succesful" });
+                res.status(200).json({ success: true, message: 'Login is succesful' });
             }
             catch (error) {
                 res.status(400).json({ success: false, message: error.message });
@@ -41,11 +41,19 @@ class AuthController {
                 const userData = req.body;
                 const result = yield this.authService.register(userData);
                 console.log(result);
-                res.status(201).json({ success: true, message: "User created." });
+                res.status(201).json({ success: true, message: 'User created.' });
             }
             catch (error) {
                 res.status(400).json({ success: false, message: error.message });
             }
+        });
+        /**
+         * logout
+         */
+        this.logout = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            res.clearCookie('access_token');
+            res.clearCookie('refresh_token');
+            res.status(200).json({ success: true, message: 'Log out is sucessfull' });
         });
     }
 }
