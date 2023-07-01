@@ -14,7 +14,7 @@ export class AuthService {
         SELECT * FROM users WHERE email = $1 and password = $2
         `
         const result = await client.query(text, [email, hashedPassword])
-        if (result.rows.length === 0) {
+        if (result.rows.length === 0) {            
             throw new Error("User not found!");
         }
         const user = result.rows[0];
