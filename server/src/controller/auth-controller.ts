@@ -44,10 +44,19 @@ export class AuthController {
             const userData: RegisterRequest = req.body;
             const result = await this.authService.register(userData);
             console.log(result);
-            res.status(201).json({ success: true, message: "User created."})
-            
+            res.status(201).json({ success: true, message: "User created." })
+
         } catch (error: any) {
             res.status(400).json({ success: false, message: error.message })
         }
+    }
+
+    /**
+     * logout
+     */
+    public logout = async (req: Request, res: Response): Promise<void> => {
+        res.clearCookie("access_token");
+        res.clearCookie("refresh_token");
+        res.status(200).json({ success: true, message: "Log out is sucessfull"})
     }
 }
