@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node --watch build/src/app.js",
-    "dev": "nodemon src/app.ts"
+    "dev": "nodemon src/app.ts",
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,7 @@
     "@types/pg": "^8.10.2",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
-    "eslint": "^8.43.0",
+    "prettier": "^2.8.8",
     "typescript": "^5.1.6"
   },
   "dependencies": {
