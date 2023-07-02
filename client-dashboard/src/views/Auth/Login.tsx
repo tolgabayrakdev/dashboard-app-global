@@ -138,7 +138,7 @@ const Login = () => {
                     <Link className=" hover:underline italic" to="/">Forget password?</Link>
                   </Grid>
                   <Grid item>
-                    <Link className="hover:underline italic" to="/">Create Account</Link>
+                    <Link className="hover:underline italic" to="/auth/register">Create Account</Link>
                   </Grid>
                 </Grid>
               </form>
