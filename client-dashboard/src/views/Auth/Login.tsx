@@ -52,11 +52,6 @@ const Login = () => {
     console.log("Password: ", formData.password);
   };
 
-
-  useEffect(() => {
-    console.log(setEmailError);
-
-  }, [setEmailError])
   return (
     <>
       <Box
