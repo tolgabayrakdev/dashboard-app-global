@@ -184,7 +184,7 @@ const Register = () => {
                 <Grid container>
                
                   <Grid item>
-                    <Link className="hover:underline italic" to="/auth/login">Log in your account</Link>
+                    <Link className="hover:underline italic text-blue-500" to="/auth/login">Log in your account</Link>
                   </Grid>
                 </Grid>
               </form>

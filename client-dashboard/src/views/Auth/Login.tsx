@@ -135,10 +135,10 @@ const Login = () => {
 
                 <Grid container>
                   <Grid item xs>
-                    <Link className=" hover:underline italic" to="/">Forget password?</Link>
+                    <Link className="hover:underline italic text-blue-500" to="/auth/reset-password">Forget password?</Link>
                   </Grid>
                   <Grid item>
-                    <Link className="hover:underline italic" to="/auth/register">Create Account</Link>
+                    <Link className="hover:underline italic text-blue-500" to="/auth/register">Create Account</Link>
                   </Grid>
                 </Grid>
               </form>
