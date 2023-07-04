@@ -2,6 +2,7 @@ import { Navigate, useRoutes } from "react-router-dom";
 import NotFound from "./views/NotFound";
 import { lazy } from "react";
 import Register from "./views/Auth/Register";
+import ResetPassword from "./views/Auth/ResetPassword";
 
 const FullLayout = lazy(() => import("./layouts/FullLayout/FullLayout"))
 const AuthLayout = lazy(() => import("./layouts/AuthLayout/AuthLayout"))
@@ -28,6 +29,7 @@ export default function Router() {
             children: [
                 { path: "login", element: <Login /> },
                 { path: "register", element: <Register /> },
+                { path: "reset-password", element: <ResetPassword /> },
                 { element: <Navigate to="/auth/login" />, index: true }
             ]
         },
