@@ -1,7 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Grid, Box, Card, Button, TextField } from "@mui/material";
+import { Grid, Box, Card, Button, TextField, Divider, Alert, Snackbar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { z } from "zod";
+import GoogleIcon from '@mui/icons-material/Google';
+
+const backendUrlPrefix = import.meta.env.VITE_BACKEND_URL_PREFIX
 
 const schema = z.object({
   email: z.string().email({ message: "Geçersiz email adresi" }),
@@ -13,18 +16,42 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleSubmit = async (formData: { email: string, password: string }) => {
+
+    const result = await fetch(backendUrlPrefix + "/login", {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify({ email: formData.email, password: formData.password })
+    })
+    console.log(result);
+    if (result.status === 200) {
+      console.log("Form gönderildi!");
+    } else {
+      setIsSuccess(true);
+      console.log("Login is not successful");
+    }
   };
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
+  const handleGoogleLogin = async () => {
+    try {
+      const googleAuthUrl = 'https://accounts.google.com/o/oauth2/auth';
+      const redirectUri = 'http://localhost:5173'; // İsteğin yönlendirileceği URI'yi buraya girin
+      const clientId = import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID; // Google API'den alacağınız kimlik bilgilerini buraya ekleyin.
+      const scope = 'email profile'; // İstediğiniz kapsamları burada belirleyin
+
+      const authUrl = `${googleAuthUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
+
+      window.location.href = authUrl;
+    } catch (error) {
+      console.error('Google login error:', error);
+    }
   };
+
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
     const formData = {
       email: email.trim(),
       password: password.trim(),
@@ -33,10 +60,7 @@ const Login = () => {
     const validationResult = schema.safeParse(formData);
 
     if (!validationResult.success) {
-      const errors = validationResult.error.flatten();
-      console.log(errors);
-
-
+      const errors: any = validationResult.error.flatten();
       setEmailError(errors.fieldErrors.email);
       setPasswordError(errors.fieldErrors.password);
     } else {
@@ -46,11 +70,7 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = (formData: { email: string, password: string }) => {
-    console.log("Form gönderildi!");
-    console.log("Email: ", formData.email);
-    console.log("Password: ", formData.password);
-  };
+
 
   return (
     <>
@@ -105,7 +125,7 @@ const Login = () => {
                   autoComplete="email"
                   autoFocus
                   value={email}
-                  onChange={handleEmailChange}
+                  onChange={(e) => setEmail(e.target.value)}
                   error={!!emailError}
                   helperText={emailError}
                 />
@@ -119,7 +139,7 @@ const Login = () => {
                   id="password"
                   autoComplete="current-password"
                   value={password}
-                  onChange={handlePasswordChange}
+                  onChange={(e) => setPassword(e.target.value)}
                   error={!!passwordError}
                   helperText={passwordError}
                 />
@@ -128,12 +148,17 @@ const Login = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 3, mb: 1 }}
                 >
                   Sign In
                 </Button>
 
-                <Grid container>
+                <Button onClick={handleGoogleLogin} variant="outlined" startIcon={< GoogleIcon />}>
+                  Google
+                </Button>
+                <Divider className="p-1" />
+
+                <Grid className="mt-3" container>
                   <Grid item xs>
                     <Link className="hover:underline italic text-blue-500" to="/auth/reset-password">Forget password?</Link>
                   </Grid>

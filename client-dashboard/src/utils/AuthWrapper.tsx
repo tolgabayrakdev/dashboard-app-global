@@ -21,10 +21,13 @@ function AuthWrapper(WrappedComponent: any) {
                         setLoggedIn(true);
                         setLoading(false);
                     } else if (res.status === 403) {
-                        navigate('/signin');
-                    } else {
+                        navigate('/auth/login');
+                    } else if (res.status === 401) {
                         setLoading(false);
                         setSessionExpired(true);
+                    }else{
+                        setLoading(false);
+                        setAccessDenied(true);
                     }
                 } catch (error) {
                     setAccessDenied(true);
