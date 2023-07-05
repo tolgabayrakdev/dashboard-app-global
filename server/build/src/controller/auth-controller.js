@@ -11,9 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const auth_service_1 = require("../service/auth-service");
+const google_auth_library_1 = require("google-auth-library");
+const helper_1 = require("../util/helper");
 class AuthController {
     constructor() {
         this.authService = new auth_service_1.AuthService();
+        this.googleClientId = process.env.GOOGLE_AUTH_CLIENT_ID;
+        this.helper = new helper_1.Helper();
         /**
          * login
          */
@@ -48,12 +52,46 @@ class AuthController {
             }
         });
         /**
+         * verify
+         */
+        this.verify = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const accessToken = req.cookies("access_token");
+                console.log("dsfdsf");
+                console.log(this.helper.decodeToken(accessToken));
+            }
+            catch (err) {
+                res.status(500).json(err);
+            }
+        });
+        /**
          * logout
          */
         this.logout = (req, res) => __awaiter(this, void 0, void 0, function* () {
             res.clearCookie('access_token');
             res.clearCookie('refresh_token');
             res.status(200).json({ success: true, message: 'Log out is sucessfull' });
+        });
+        /**
+         * googleAuth
+         */
+        this.googleAuth = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const client = new google_auth_library_1.OAuth2Client(this.googleClientId);
+                const { id_token } = req.body;
+                const ticket = yield client.verifyIdToken({
+                    idToken: id_token,
+                    audience: this.googleClientId,
+                });
+                const payload = ticket.getPayload();
+                const email = payload === null || payload === void 0 ? void 0 : payload.email;
+                // Burada e-posta üzerinden kullanıcı doğrulama veya kayıt işlemini gerçekleştirebilirsiniz.
+                // Gerekli kontrolleri yapabilir, gerekli iş mantığını uygulayabilir ve kullanıcıya erişim belirtecini döndürebilirsiniz.
+                res.status(200).json({ success: true, message: 'Google authentication successful' });
+            }
+            catch (error) {
+                res.status(500).json({ success: false, message: 'Google authentication failed' });
+            }
         });
     }
 }
