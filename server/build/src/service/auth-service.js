@@ -73,5 +73,15 @@ class AuthService {
             }
         });
     }
+    /**
+     * resetPassword
+     */
+    resetPassword(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const checkText = `
+     SELECT
+    `;
+        });
+    }
 }
 exports.AuthService = AuthService;

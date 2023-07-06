@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthService } from '../service/auth-service';
+import { GoogleAuth, OAuth2Client } from 'google-auth-library';
+import { Helper } from '../util/helper';
 
 interface LoginRequestSchema {
   email: string;
@@ -15,6 +17,8 @@ interface RegisterRequest {
 
 export class AuthController {
   private authService = new AuthService();
+  private googleClientId = process.env.GOOGLE_AUTH_CLIENT_ID;
+  public helper = new Helper();
   /**
    * login
    */
@@ -49,11 +53,54 @@ export class AuthController {
   };
 
   /**
+   * verify
+   */
+  public verify = async (req: Request, res: Response) => {
+    try {
+      const token: string = req.cookies.access_token;
+      const verifyToken = this.helper.decodeToken(token);
+      res.status(200).json({ user: { verifyToken } });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  };
+
+  /**
    * logout
    */
   public logout = async (req: Request, res: Response): Promise<void> => {
     res.clearCookie('access_token');
     res.clearCookie('refresh_token');
     res.status(200).json({ success: true, message: 'Log out is sucessfull' });
+  };
+
+  /**
+   * googleAuth
+   */
+  public googleAuth = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const client = new OAuth2Client(this.googleClientId);
+      const { id_token }: { id_token: string } = req.body;
+
+      const ticket = await client.verifyIdToken({
+        idToken: id_token,
+        audience: this.googleClientId,
+      });
+
+      const payload = ticket.getPayload();
+      const email = payload?.email;
+
+      // Burada e-posta üzerinden kullanıcı doğrulama veya kayıt işlemini gerçekleştirebilirsiniz.
+      // Gerekli kontrolleri yapabilir, gerekli iş mantığını uygulayabilir ve kullanıcıya erişim belirtecini döndürebilirsiniz.
+
+      res
+        .status(200)
+        .json({ success: true, message: 'Google authentication successful' });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ success: false, message: 'Google authentication failed' });
+    }
   };
 }

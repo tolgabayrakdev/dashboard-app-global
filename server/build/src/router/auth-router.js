@@ -13,4 +13,5 @@ const authController = new auth_controller_1.AuthController();
 router.post('/login', authController.login);
 router.post('/register', (0, verify_validate_1.verifyValidate)(user_1.default), authController.register);
 router.post('/logout', verify_token_1.verifyToken, authController.logout);
+router.post('/verify', authController.verify);
 exports.default = router;

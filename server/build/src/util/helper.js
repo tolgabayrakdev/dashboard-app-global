@@ -31,5 +31,18 @@ class Helper {
     hashPassword(payload) {
         return crypto_1.default.createHash('sha256').update(payload).digest('base64');
     }
+    /**
+     * decodeToken
+     */
+    decodeToken(payload) {
+        var _a;
+        try {
+            const decodedToken = jsonwebtoken_1.default.verify(payload, (_a = process.env.JWT_SECRET_KEY) !== null && _a !== void 0 ? _a : "JWT_SECRET_KEY");
+            return decodedToken;
+        }
+        catch (error) {
+            throw new Error(error);
+        }
+    }
 }
 exports.Helper = Helper;

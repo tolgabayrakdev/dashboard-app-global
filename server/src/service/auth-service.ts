@@ -62,4 +62,13 @@ export class AuthService {
       throw new Error(error);
     }
   }
+
+  /**
+   * resetPassword
+   */
+  public async resetPassword(email: string): Promise<void> {
+    const checkText = `
+     SELECT
+    `;
+  }
 }
