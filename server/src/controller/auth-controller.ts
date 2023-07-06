@@ -59,13 +59,12 @@ export class AuthController {
     try {
       const token: string = req.cookies.access_token;
       const verifyToken = this.helper.decodeToken(token);
-      res.status(200).json({ "user": { verifyToken } })
+      res.status(200).json({ user: { verifyToken } });
     } catch (err) {
       console.log(err);
-
-      res.status(500).json(err)
+      res.status(500).json(err);
     }
-  }
+  };
 
   /**
    * logout
@@ -75,10 +74,6 @@ export class AuthController {
     res.clearCookie('refresh_token');
     res.status(200).json({ success: true, message: 'Log out is sucessfull' });
   };
-
-
-
-
 
   /**
    * googleAuth
@@ -99,11 +94,13 @@ export class AuthController {
       // Burada e-posta üzerinden kullanıcı doğrulama veya kayıt işlemini gerçekleştirebilirsiniz.
       // Gerekli kontrolleri yapabilir, gerekli iş mantığını uygulayabilir ve kullanıcıya erişim belirtecini döndürebilirsiniz.
 
-      res.status(200).json({ success: true, message: 'Google authentication successful' });
+      res
+        .status(200)
+        .json({ success: true, message: 'Google authentication successful' });
     } catch (error) {
-      res.status(500).json({ success: false, message: 'Google authentication failed' });
+      res
+        .status(500)
+        .json({ success: false, message: 'Google authentication failed' });
     }
-  }
-
-
+  };
 }

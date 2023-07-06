@@ -31,7 +31,10 @@ export class Helper {
    */
   public decodeToken(payload: string) {
     try {
-      const decodedToken = Jwt.verify(payload, process.env.JWT_SECRET_KEY ?? "Secret_Key");
+      const decodedToken = Jwt.verify(
+        payload,
+        process.env.JWT_SECRET_KEY ?? 'Secret_Key',
+      );
       return decodedToken;
     } catch (error: any) {
       throw new Error(error);

@@ -4,9 +4,6 @@ import { verifyToken } from '../middleware/verify-token';
 import { verifyValidate } from '../middleware/verify-validate';
 import UserCreate from '../validation/user';
 
-
-
-
 const router = express.Router();
 const authController = new AuthController();
 

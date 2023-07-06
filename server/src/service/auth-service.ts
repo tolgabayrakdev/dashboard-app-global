@@ -63,13 +63,12 @@ export class AuthService {
     }
   }
 
-
   /**
    * resetPassword
    */
   public async resetPassword(email: string): Promise<void> {
     const checkText = `
      SELECT
-    `
+    `;
   }
 }
