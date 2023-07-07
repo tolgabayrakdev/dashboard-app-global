@@ -37,7 +37,7 @@ class Helper {
     decodeToken(payload) {
         var _a;
         try {
-            const decodedToken = jsonwebtoken_1.default.verify(payload, (_a = process.env.JWT_SECRET_KEY) !== null && _a !== void 0 ? _a : "JWT_SECRET_KEY");
+            const decodedToken = jsonwebtoken_1.default.verify(payload, (_a = process.env.JWT_SECRET_KEY) !== null && _a !== void 0 ? _a : 'Secret_Key');
             return decodedToken;
         }
         catch (error) {

@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Spinner from '../views/Spinner/Spinner';
 
 function AuthWrapper(WrappedComponent: any) {
     const Wrapper = (props: any) => {
@@ -92,9 +93,7 @@ function AuthWrapper(WrappedComponent: any) {
 
         if (loading) {
             return (
-                <div className="text-center text-3xl mt-3 text-blue-500">
-                    Yükleniyor...
-                </div>
+                <Spinner />
             );
         }
 

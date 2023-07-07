@@ -20,12 +20,13 @@ import {
   Divider,
   ListItemIcon,
 } from "@mui/material";
-
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Header = (props: any) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -36,7 +37,7 @@ const Header = (props: any) => {
   // 4
   const [anchorEl4, setAnchorEl4] = React.useState(null);
 
-  const handleClick4 = (event) => {
+  const handleClick4 = (event: any) => {
     setAnchorEl4(event.currentTarget);
   };
 
@@ -44,10 +45,25 @@ const Header = (props: any) => {
     setAnchorEl4(null);
   };
 
+  const handleLogout = async () => {
+    try {
+      const result = await fetch("http://localhost:5000/api/v1/auth/logout", {
+        method: "POST",
+        credentials: "include"
+      })
+      if (result.status === 200) {
+        navigate("/auth")
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setAnchorEl4(null);
+  };
+
   // 5
   const [anchorEl5, setAnchorEl5] = React.useState(null);
 
-  const handleClick5 = (event) => {
+  const handleClick5 = (event: any) => {
     setAnchorEl5(event.currentTarget);
   };
 
@@ -230,7 +246,7 @@ const Header = (props: any) => {
             },
           }}
         >
-          <MenuItem onClick={handleClose4}>
+          <MenuItem onClick={()=> navigate("/dashboard/account")}>
             <Avatar
               sx={{
                 width: "35px",
@@ -258,7 +274,7 @@ const Header = (props: any) => {
             </ListItemIcon>
             Settings
           </MenuItem>
-          <MenuItem onClick={handleClose4}>
+          <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <LogoutOutlinedIcon fontSize="small" />
             </ListItemIcon>

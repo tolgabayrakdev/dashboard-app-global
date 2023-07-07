@@ -56,11 +56,12 @@ class AuthController {
          */
         this.verify = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const accessToken = req.cookies("access_token");
-                console.log("dsfdsf");
-                console.log(this.helper.decodeToken(accessToken));
+                const token = req.cookies.access_token;
+                const verifyToken = this.helper.decodeToken(token);
+                res.status(200).json({ user: { verifyToken } });
             }
             catch (err) {
+                console.log(err);
                 res.status(500).json(err);
             }
         });
@@ -87,10 +88,14 @@ class AuthController {
                 const email = payload === null || payload === void 0 ? void 0 : payload.email;
                 // Burada e-posta üzerinden kullanıcı doğrulama veya kayıt işlemini gerçekleştirebilirsiniz.
                 // Gerekli kontrolleri yapabilir, gerekli iş mantığını uygulayabilir ve kullanıcıya erişim belirtecini döndürebilirsiniz.
-                res.status(200).json({ success: true, message: 'Google authentication successful' });
+                res
+                    .status(200)
+                    .json({ success: true, message: 'Google authentication successful' });
             }
             catch (error) {
-                res.status(500).json({ success: false, message: 'Google authentication failed' });
+                res
+                    .status(500)
+                    .json({ success: false, message: 'Google authentication failed' });
             }
         });
     }

@@ -12,7 +12,7 @@ const Menuitems = [
   {
     title: "Dashboard",
     icon: DashboardOutlinedIcon,
-    href: "/dashboards/dashboard1",
+    href: "/dashboard/app",
   },
   {
     title: "Autocomplete",
