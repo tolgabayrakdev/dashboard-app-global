@@ -20,8 +20,7 @@ import {
   Divider,
   ListItemIcon,
 } from "@mui/material";
-import { Navigate, useNavigate } from "react-router-dom";
-
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Header = (props: any) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -42,7 +41,11 @@ const Header = (props: any) => {
     setAnchorEl4(event.currentTarget);
   };
 
-  const handleClose4 = async () => {
+  const handleClose4 = () => {
+    setAnchorEl4(null);
+  };
+
+  const handleLogout = async () => {
     try {
       const result = await fetch("http://localhost:5000/api/v1/auth/logout", {
         method: "POST",
@@ -243,7 +246,7 @@ const Header = (props: any) => {
             },
           }}
         >
-          <MenuItem onClick={handleClose4}>
+          <MenuItem onClick={()=> navigate("/dashboard/account")}>
             <Avatar
               sx={{
                 width: "35px",
@@ -271,7 +274,7 @@ const Header = (props: any) => {
             </ListItemIcon>
             Settings
           </MenuItem>
-          <MenuItem onClick={handleClose4}>
+          <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <LogoutOutlinedIcon fontSize="small" />
             </ListItemIcon>
