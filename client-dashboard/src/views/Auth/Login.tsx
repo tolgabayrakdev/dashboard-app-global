@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Grid, Box, Card, Button, TextField, Divider, Alert, Snackbar } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import GoogleIcon from '@mui/icons-material/Google';
 
@@ -8,7 +8,7 @@ const backendUrlPrefix = import.meta.env.VITE_BACKEND_URL_PREFIX
 
 const schema = z.object({
   email: z.string().email({ message: "Geçersiz email adresi" }),
-  password: z.string().min(8, { message: "Şifre en az 8 karakter olmalıdır" }),
+  password: z.string().min(6, { message: "Şifre en az 6 karakter olmalıdır" }),
 });
 
 const Login = () => {
@@ -16,21 +16,46 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleClose2 = (event: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
 
   const handleSubmit = async (formData: { email: string, password: string }) => {
 
-    const result = await fetch(backendUrlPrefix + "/login", {
+    const result = await fetch(backendUrlPrefix + "/auth/login", {
       method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
       credentials: "include",
       body: JSON.stringify({ email: formData.email, password: formData.password })
     })
     console.log(result);
     if (result.status === 200) {
       console.log("Form gönderildi!");
+      setOpen2(true);
+      navigate("/dashboard/app")
     } else {
-      setIsSuccess(true);
       console.log("Login is not successful");
+      setOpen(true);
     }
   };
 
@@ -89,6 +114,22 @@ const Login = () => {
           },
         }}
       >
+        <Snackbar
+          open={open}
+          autoHideDuration={1000}
+          message="Ups, can not login!"
+          onClose={handleClose}
+        />
+
+
+        <Snackbar
+          open={open2}
+          autoHideDuration={1000}
+          onClose={handleClose2}
+        >
+          <Alert severity="success">Log in successful.</Alert>
+        </Snackbar>
+
         <Grid
           container
           spacing={0}
