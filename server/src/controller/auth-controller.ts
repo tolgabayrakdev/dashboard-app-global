@@ -22,11 +22,11 @@ export class AuthController {
   /**
    * login
    */
-  public login = async (req: Request, res: Response): Promise<void> => {    
-    try {      
-      const { email, password }: LoginRequestSchema = req.body;      
-      const result: any = await this.authService.login(email, password);      
-      
+  public login = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email, password }: LoginRequestSchema = req.body;
+      const result: any = await this.authService.login(email, password);
+
       res.cookie('access_token', result.access_token, {
         httpOnly: true,
       });
@@ -34,7 +34,7 @@ export class AuthController {
         httpOnly: true,
       });
       res.status(200).json({ success: true, message: 'Login is succesful' });
-    } catch (error: any) {      
+    } catch (error: any) {
       res.status(400).json({ success: false, message: error.message });
     }
   };
@@ -59,13 +59,28 @@ export class AuthController {
   public verify = async (req: Request, res: Response) => {
     try {
       const token: string = req.cookies.access_token;
-      const verifyToken = this.helper.decodeToken(token);
-      res.status(200).json({ user: { verifyToken } });
+      const verifyToken: any = this.helper.decodeToken(token);
+      const userInformation = await this.authService.veriyfUserInformation(verifyToken.id)      
+      res.status(200).json({ user: { userInformation } });
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
   };
+
+  /**
+   * getInformationUser
+   */
+  public getInformationUser(req: Request, res: Response) {
+    try {
+      const token: string = req.cookies.access_token;
+      const verifyToken = this.helper.decodeToken(token);
+
+    } catch (err) {
+      res.status(500).json(err);
+
+    }
+  }
 
   /**
    * logout

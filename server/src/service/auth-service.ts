@@ -64,6 +64,24 @@ export class AuthService {
   }
 
   /**
+   * veriyfUserInformation
+   */
+  public async veriyfUserInformation(id: number): Promise<object> {
+    try {
+      const text = `SELECT id, first_name, last_name, email FROM users WHERE id = $1`;
+      const result = await client.query(text, [id]);
+
+      if (result.rows.length === 0) {
+        throw new Error("User not found!");
+      }
+      const userInformation = result.rows[0];
+      return userInformation;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
+
+  /**
    * resetPassword
    */
   public async resetPassword(email: string): Promise<void> {
