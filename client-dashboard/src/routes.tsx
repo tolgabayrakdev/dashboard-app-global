@@ -22,8 +22,12 @@ export default function Router() {
             children: [
                 { element: <Navigate to="/dashboard/app" />, index: true },
                 { path: "app", element: <Dashboard /> },
-                { path: "account", element: <Account /> }
+                { path: "account", element: <Account /> },
             ]
+        },
+        {
+            path: "/",
+            element: <Navigate to="/auth" />
         },
         {
             path: "/auth",
