@@ -14,13 +14,13 @@ import { SidebarWidth } from "../../../assets/global/Theme-variable";
 import Menuitems from "./data";
 import Buynow from "./Buynow";
 
-const Sidebar = (props) => {
+const Sidebar = (props: any) => {
   const [open, setOpen] = React.useState(true);
   const { pathname } = useLocation();
   const pathDirect = pathname;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
-  const handleClick = (index) => {
+  const handleClick = (index: any) => {
     if (open === index) {
       setOpen((prevopen) => !prevopen);
     } else {
@@ -32,7 +32,7 @@ const Sidebar = (props) => {
     <Box sx={{ p: 3, height: "calc(100vh - 40px)" }}>
       <Link to="/">
         <Box sx={{ display: "flex", alignItems: "Center" }}>
-
+           Icon Here
         </Box>
       </Link>
 

@@ -10,7 +10,7 @@ type User = {
 }
 
 export default function Account({ }: Props) {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState<User>([]);
 
 
 
@@ -25,7 +25,7 @@ export default function Account({ }: Props) {
         method: "POST",
         credentials: "include"
       })
-      const data = await result.json();      
+      const data = await result.json();
       setUser(data.user.userInformation);
     } catch (error) {
       console.log(error);
@@ -39,14 +39,11 @@ export default function Account({ }: Props) {
       <h2 className="text-center text-xl">General Information</h2>
       <Divider variant="middle" className="pt-1" />
 
-      {
-        <p> {JSON.stringify(user)} </p>
-      }
 
       <Card variant="outlined">
-        <p className="m-1">First Name: </p>
-        <p className="m-1">Last Name: </p>
-        <p className="m-1">Email: </p>
+        <p className="m-1">First Name: <span className="underline hover:cursor-pointer font-medium ml-1">{user.first_name}</span> </p>
+        <p className="m-1">Last Name:<span className="underline hover:cursor-pointer font-medium ml-1">{user.last_name}</span> </p>
+        <p className="m-1">Email: <span className=" underline hover:cursor-pointer font-medium ml-1"> {user.email}</span></p>
       </Card>
     </div>
   )
