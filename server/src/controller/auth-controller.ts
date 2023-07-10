@@ -60,7 +60,9 @@ export class AuthController {
     try {
       const token: string = req.cookies.access_token;
       const verifyToken: any = this.helper.decodeToken(token);
-      const userInformation = await this.authService.veriyfUserInformation(verifyToken.id)      
+      const userInformation = await this.authService.veriyfUserInformation(
+        verifyToken.id,
+      );
       res.status(200).json({ user: { userInformation } });
     } catch (err) {
       console.log(err);
@@ -75,10 +77,8 @@ export class AuthController {
     try {
       const token: string = req.cookies.access_token;
       const verifyToken = this.helper.decodeToken(token);
-
     } catch (err) {
       res.status(500).json(err);
-
     }
   }
 
