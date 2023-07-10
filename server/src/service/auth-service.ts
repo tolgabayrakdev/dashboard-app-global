@@ -72,7 +72,7 @@ export class AuthService {
       const result = await client.query(text, [id]);
 
       if (result.rows.length === 0) {
-        throw new Error("User not found!");
+        throw new Error('User not found!');
       }
       const userInformation = result.rows[0];
       return userInformation;
