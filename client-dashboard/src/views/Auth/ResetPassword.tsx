@@ -7,7 +7,7 @@ type Props = {}
 export default function ResetPassword({ }: Props) {
     const [email, setEmail] = useState("");
 
-    const handleFormSubmit = () => {
+    const handleFormSubmit = (e: any) => {
       
     }
 
