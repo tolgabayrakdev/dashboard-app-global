@@ -1,5 +1,7 @@
 import pg from 'pg';
 
+const dbA = "";
+
 const client = new pg.Client({
   user: 'root',
   database: 'postgres',
