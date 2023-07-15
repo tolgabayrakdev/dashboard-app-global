@@ -44,7 +44,7 @@ export class AuthService {
     const hashPassword = this.helper.hashPassword(password);
 
     const text = `
-        INSERT INTO users(first_name, last_name, email, password) 
+        INSERT INTO users(first_name, last_name, email, password, created_at, updated_at) 
         VALUES ($1, $2, $3, $4)
         `;
     try {
