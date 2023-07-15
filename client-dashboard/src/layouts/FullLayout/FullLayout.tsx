@@ -38,7 +38,7 @@ const FullLayout = () => {
   //
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up("lg"));
   return (
     <MainWrapper>
       <Header
@@ -74,4 +74,4 @@ const FullLayout = () => {
   );
 };
 
-export default AuthWrapper(FullLayout);
+export default FullLayout;

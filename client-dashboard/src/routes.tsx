@@ -4,6 +4,7 @@ import { lazy } from "react";
 import Register from "./views/Auth/Register";
 import ResetPassword from "./views/Auth/ResetPassword";
 import Account from "./views/Dashboard/Account";
+import Clients from "./views/Clients/Clients";
 
 const FullLayout = lazy(() => import("./layouts/FullLayout/FullLayout"))
 const AuthLayout = lazy(() => import("./layouts/AuthLayout/AuthLayout"))
@@ -23,6 +24,7 @@ export default function Router() {
                 { element: <Navigate to="/dashboard/app" />, index: true },
                 { path: "app", element: <Dashboard /> },
                 { path: "account", element: <Account /> },
+                { path: "clients", element: <Clients />}
             ]
         },
         {
